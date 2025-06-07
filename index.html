@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+</head>
+
+<body style="margin: 20px; background-color: seagreen ;">
+    <style>
+        .error {
+            color: red;
+        }
+
+        input {
+            padding: 10px;
+            margin-top: 10px;
+            width: 51%;
+        }
+
+        input:invalid {
+            border: solid red 2px;
+        }
+
+        input:valid {
+            border: green solid 2px;
+        }
+
+        #btn {
+            background-color: gray;
+            opacity: 1;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 7px;
+        }
+
+        #btn:disabled {
+            opacity: 0.5;
+        }
+
+        #btn:enabled {
+            opacity: 1;
+        }
+
+        #form {
+            border: black solid 2px;
+            background-color:lightgrey ;
+        }
+        .container{
+            margin: 10px;
+        }
+    </style>
+    <div>
+        <h1 style="text-align: center;">Registration Form</h1>
+        <form id="form">
+            <div class="container">
+                <label><b>Name: </b></label><br>
+                <input type="text" placeholder="Enter your name" id="name" required><br>
+                <span id="name-error" class="error"></span><br>
+
+                <label><b>Email: </b></label><br>
+                <input type="email" placeholder="Enter your email" id="email" required><br>
+                <span id="email-error" class="error"></span><br>
+
+                <label><b>password: </b></label><br>
+                <input type="password" placeholder="Enter your password" id="password" required><br>
+                <span id="password-error" class="error"></span><br>
+
+                <label for="textarea"><b>Maximum 200 characters:</b></label><br>
+                <textarea rows="10" cols="50" maxlength="200" required id="textarea"></textarea><br>
+                <span id="counter">0/200 characters</span><br>
+                <span id="warning" class="error"></span><br>
+
+                <button id="btn" type="submit" disabled>Submit</button>
+            <div>    
+        </form>
+    </div>
+
+    <script>
+        var form = document.getElementById("form")
+        var nameInput = document.getElementById("name")
+        var emailInput = document.getElementById("email")
+        var passwordInput = document.getElementById("password")
+        var btn = document.getElementById("btn")
+
+        var nameError = document.getElementById("name-error")
+        var emailError = document.getElementById("email-error")
+        var passwordError = document.getElementById("password-error")
+        
+
+        //name error
+        function update() {
+            let valid = true
+
+            //name 
+            const namepattern = /^[a-zA-Z]+$/
+            if (nameInput.value.trim() === '' || !namepattern.test(nameInput.value.trim())) {
+                nameError.textContent = "please enter your name"
+                valid = false
+            }
+            else {
+                nameError.textContent = ""
+            }
+
+            //email
+            const emailpattern = /^[a-zA-Z]+[0-9]*@gmail\.com$/
+            if (!emailpattern.test(emailInput.value.trim())) {
+                emailError.textContent = "please enter a proper email address"
+                valid = false
+            }
+            else {
+                emailError.textContent = ""
+            }
+
+            //password
+            if (passwordInput.value.length < 6) {
+                passwordError.textContent = "password atleast contain 6 characters"
+                valid = false
+            }
+            else {
+                passwordError.textContent = ""
+            }
+
+            btn.disabled = !valid
+            return valid
+
+        }
+
+        nameInput.addEventListener("input", update)
+        emailInput.addEventListener("input", update)
+        passwordInput.addEventListener("input", update)
+
+        form.addEventListener("submit", (e) => {
+            e.preventDefault()
+            console.log(e)
+            if (update()) {
+                alert("form submitted sucessfully")
+                form.reset()
+                btn.disabled = true
+                counter.textContent = "0/200 characters"
+                warning.textContent = ""
+            }
+            else {
+                alert("some wrong")
+            }
+        })
+
+    </script>
+</body>
+
+</html>
